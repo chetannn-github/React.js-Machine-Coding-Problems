@@ -1,0 +1,11 @@
+#otpform{
+    display: flex;
+    gap: 10px;
+}
+
+
+#otpform input{
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
