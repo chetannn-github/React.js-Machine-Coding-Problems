@@ -29,6 +29,7 @@ function PasswordGenerator() {
     
 
 
+
     let handlePasswordLengthChange = (e) =>{
         console.log(e.target.value);
         setPasswordLength(e.target.value)
