@@ -15,11 +15,12 @@ function OtpForm({otpLength}) {
     console.log(value)
     if(isNaN(value)){
       console.error("not a numberr")
+      console.log(value);
       return;
     }
     
     let newOtp = [...otp];
-    newOtp[index] = value.substring(value.length-1);
+    newOtp[index] = value[(value.length-1)];
     setOtp(newOtp);
     console.log(newOtp);
     
@@ -43,16 +44,22 @@ function OtpForm({otpLength}) {
   }
 
   let handleKeyDown = (index, e) =>{
+    
     if(e.key =="Backspace" && index>0 && !otp[index]) {
-      
-      inputRefs.current[index-1].focus();    }
+      console.log("backspace pressed");
+      inputRefs.current[index-1].focus();
+    }
+    inputRefs.current[index].setSelectionRange(1,1);
   }
 
   let handleClick = (index)=>{
     inputRefs.current[index].setSelectionRange(1,1);
 
-    if(index>0 && !otp[index-1]){
-      inputRefs.current[otp.indexOf("")].focus();
+      for(let i=0; i<index;i++){
+        if(!otp[i]){
+          inputRefs.current[i].focus();
+          return;
+        }
     }
   }
 
