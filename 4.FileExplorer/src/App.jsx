@@ -4,10 +4,10 @@ import { fileData } from './utils/data';
 
 function App() {
   const [data, setData] = useState(fileData);
-      console.log(data);
+      // console.log(data);
   return (
     <div>
-      <FileExplorer data = {data}/>
+      <FileExplorer currFolderData={data} data = {data} setData={setData}/>
     </div>
   )
 }
