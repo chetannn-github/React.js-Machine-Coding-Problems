@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRef } from "react"
 import InputCheckBox from "./InputCheckBox";
 
 
@@ -7,7 +6,6 @@ function PasswordGenerator() {
     let [passwordLength,setPasswordLength] = useState(14);
     let [generatedpassword, setGeneratedPassword] = useState("e34343");
     let [passwordStrength , setPasswordStrength] = useState("");
-    let passwordLengthRef = useRef();
     const [isCopied, setIsCopied] = useState(false);
     const [error,setError] = useState(null)
 
@@ -20,16 +18,11 @@ function PasswordGenerator() {
 
 
     let handleCheckBoxChange = (id) => {
-        setCheckBoxState((prev) =>
-            prev.map((value) =>
-                value.id === id ? { ...value, checked: !value.checked } : value
-            )
-        );
+        const newCheckBoxState = checkBoxeState.map((value)=>( value.id == id ? {...value , checked  : !value.checked} : value));
+        setCheckBoxState(newCheckBoxState);
     };
+
     
-
-
-
     let handlePasswordLengthChange = (e) =>{
         console.log(e.target.value);
         setPasswordLength(e.target.value)
@@ -107,7 +100,6 @@ function PasswordGenerator() {
                 <input
                 className="w-full h-[10px]" 
                 onChange={handlePasswordLengthChange}
-                ref={passwordLengthRef}
                 type="range"
                 max={20}
                 min={8}
