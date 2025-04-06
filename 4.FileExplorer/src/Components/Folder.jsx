@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FOLDER_IMAGE_URL, PLUS_IMAGE_URL } from '../utils/data'
+import { FOLDER_IMAGE_URL, PLUS_FOLDER_URL, PLUS_IMAGE_URL } from '../utils/data'
 import FileExplorer from './FileExplorer'
 
 function Folder({folderData,data,setData}) {
@@ -9,6 +9,7 @@ function Folder({folderData,data,setData}) {
     }
     // console.log(data)
     const [isNew, setIsNew] = useState(false);
+    const [isNewFolder, setIsNewFolder] = useState(false);
     const inputRef = React.useRef(null);
 
     useEffect(() => {
@@ -22,6 +23,12 @@ function Folder({folderData,data,setData}) {
         setIsOpen(true);
         setIsNew(true);    
     }
+
+    const handleNewFolder = () => {
+        setIsOpen(true); 
+        setIsNew(true);
+        setIsNewFolder(true);
+    }
     const handleBlur = () => {
         setIsNew(false);
     }
@@ -31,7 +38,7 @@ function Folder({folderData,data,setData}) {
             let newFile ={
                 name: e.target.value,
                 id: Date.now(),
-                isFolder: false,
+                isFolder: isNewFolder,
                 children: []
             }
             // console.log(folderData.id)
@@ -41,7 +48,8 @@ function Folder({folderData,data,setData}) {
             setIsNew(false);
             setIsOpen(true);
         }
-    }
+    } 
+    
 
     const addFileToFolder = (currData, folderId, newFile) => {
         return currData.map(item => {
@@ -72,6 +80,7 @@ function Folder({folderData,data,setData}) {
                 </div>
                 
                 <img src={PLUS_IMAGE_URL} style={{height : "18px"}} onClick={handleNewFile}></img>
+                <img src={PLUS_FOLDER_URL} style={{height : "18px"}} onClick={handleNewFolder}></img>
             </div>
             {isNew && <input ref={inputRef} type='text' onBlur={handleBlur} style={{marginLeft: '20px'}} onKeyDown={handleAddNewFile} ></input> }
             {isOpen && folderData.children.length > 0 && <FileExplorer data={data} currFolderData={folderData.children} setData={setData}/>}
