@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FOLDER_IMAGE_URL, PLUS_FOLDER_URL, PLUS_IMAGE_URL } from '../utils/data'
+import { DELETE_ICON_URL, FOLDER_IMAGE_URL, PLUS_FOLDER_URL, PLUS_IMAGE_URL } from '../utils/data'
 import FileExplorer from './FileExplorer'
 
 function Folder({folderData,data,setData}) {
@@ -69,6 +69,23 @@ function Folder({folderData,data,setData}) {
         });
     };
 
+    const deleteFile = (currData,id) =>{
+        return currData.filter((item) => {
+            if(item.id == id){
+                return false;
+            }
+            else if(item.isFolder && item.children.length > 0){
+                item.children = deleteFile(item.children,id);
+            }
+            return true;
+        });
+    }
+
+    const handleDelete = () => {
+        let updatedData = deleteFile(data,folderData.id);
+        setData(() => updatedData);
+    }
+
     
 
 
@@ -81,6 +98,7 @@ function Folder({folderData,data,setData}) {
                 
                 <img src={PLUS_IMAGE_URL} style={{height : "18px"}} onClick={handleNewFile}></img>
                 <img src={PLUS_FOLDER_URL} style={{height : "18px"}} onClick={handleNewFolder}></img>
+                 <img src={DELETE_ICON_URL} style={{height : "18px"}} onClick={handleDelete}></img>
             </div>
             {isNew && <input ref={inputRef} type='text' onBlur={handleBlur} style={{marginLeft: '20px'}} onKeyDown={handleAddNewFile} ></input> }
             {isOpen && folderData.children.length > 0 && <FileExplorer data={data} currFolderData={folderData.children} setData={setData}/>}
