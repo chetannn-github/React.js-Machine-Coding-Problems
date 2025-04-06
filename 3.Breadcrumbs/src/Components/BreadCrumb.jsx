@@ -3,9 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Breadcrumb = () => {
     const location = useLocation();
+    // console.log(location)
     const pathnames = location.pathname.split('/').filter((x) => x);
 
-    console.log(pathnames);
+    // console.log(pathnames);
 
     return (
         <div>
